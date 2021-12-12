@@ -19,7 +19,9 @@ void loop() {
   float volts0, volts1, v;
   adc0 = ads.readADC_SingleEnded(0);
   volts0 = ads.computeVolts(adc0);
-  v = (volts0 - 1.00513) / 1.59064 - ((volts0 < 1.0052) ? 0.0012 : 0);
+  // 标定系数，每个板子不一样
+  float k = 1.59064, b = 1.00513;
+  v = (volts0 - b) / k - ((volts0 < 1.0052) ? 0.0012 : 0);
 
   Serial.print("AIN0: "); Serial.print(adc0); Serial.print("  "); Serial.print(volts0, 4); Serial.print("V   ");Serial.print(v, 4); Serial.println("V");
 
